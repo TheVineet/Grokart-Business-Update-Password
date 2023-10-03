@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Forgot Password - Grokart</title>
@@ -8,13 +9,16 @@
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
             text-align: center;
-            font-size :16px;
+            font-size: 16px;
             /* font-size-adjust:var(100%); */
         }
+
         @media (max-width: 600px) {
-    body {
-        font-size: 10px; /* Adjust the font size for smaller screens */
-    }}
+            body {
+                font-size: 10px;
+                /* Adjust the font size for smaller screens */
+            }
+        }
 
         h1 {
             color: purple;
@@ -26,7 +30,7 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             min-width: fit-content;
-            min-height:max-content;
+            min-height: max-content;
             margin: 0 auto;
             padding: 20px;
         }
@@ -44,9 +48,11 @@
         input[type="password"] {
             position: relative;
         }
+
         .password-container {
             position: relative;
         }
+
         .confirm-password-container {
             position: relative;
         }
@@ -58,8 +64,9 @@
             top: 80%;
             transform: translateY(-50%);
             cursor: pointer;
-        } 
-        .toggle-confirm-password{
+        }
+
+        .toggle-confirm-password {
             position: absolute;
             right: 10px;
             top: 50%;
@@ -85,11 +92,39 @@
             padding: 10px 20px;
             cursor: pointer;
         }
+
+
+
+        #send-otp-button {
+            position: relative;
+            background-color: purple;
+            /* Match the background color of the Reset Password button */
+            color: #fff;
+            /* Text color */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            /* Add some top margin to separate it from other elements */
+        }
+
+        #send-otp-button:hover {
+            background-color: #4b0082;
+            /* Darker purple color on hover */
+        }
+
+        #submit-button:hover {
+            background-color: #4b0082;
+            /* Darker purple color on hover for Reset Password button */
+        }
+
+
         /* Style for the confirmation dialog */
         .confirmation-dialog {
             display: none;
             position: fixed;
-            left: 35% ;
+            left: 35%;
             top: 35%;
             width: 30%;
             height: 30%;
@@ -114,7 +149,8 @@
         }
 
         .confirmation-dialog button {
-            background-color: #f44336; /* Red color for Delete button */
+            background-color: #f44336;
+            /* Red color for Delete button */
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -124,7 +160,8 @@
         }
 
         .confirmation-dialog button.cancel {
-            background-color: #ccc; /* Gray color for Cancel button */
+            background-color: #ccc;
+            /* Gray color for Cancel button */
         }
 
         /* Style for the display message */
@@ -148,41 +185,49 @@
         .error-message {
             background-color: red;
         } */
-        .message-container {
+        /* .message-container {
             display: none;
             background-color: #4CAF50;
             color: white;
             width: 30%;
             position: fixed;
-            left: 35% ;
+            left: 35%;
             padding: 10px;
             border-radius: 5px;
             margin-top: 10px;
-        }
+        } */
+        
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Forgot Your Password?</h1>
         <p>Please enter your mobile number, OTP, new password, and confirm password to reset your password.</p>
         <form id="forgot-password-form">
             <!-- Mobile Number -->
-            <label for="mobile">Mobile Number:</label>
-            <input type="text" id="mobile" name="mobile" required maxlength="10"><br>
+            <div class="mobile-container">
+                <label for="mobile">Mobile Number:</label>
+                <input type="text" id="mobile" name="mobile" required maxlength="10">
+                <button type="button" id="send-otp-button" onclick="sendOTP()">Send OTP</button>
+            </div>
+            <div id="mobile-error" class="error-message"></div><br>
 
             <!-- OTP -->
             <label for="otp">OTP:</label>
             <input type="text" id="otp" name="otp" required maxlength="6"><br>
 
             <!-- New Password -->
-            
+
             <div class="password-container">
                 <label for="new-password">New Password:</label>
                 <input type="password" id="new-password" name="new-password" required minlength="8">
                 <span class="toggle-password" onclick="togglePasswordVisibility('new-password')">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                        <path d="M8 2a6 6 0 0 0-6.57 9.192l-.696.696a1 1 0 0 0 0 1.414 10.975 10.975 0 0 0 9.192 3.857c1.256-.177 2.492-.5 3.678-.96a1 1 0 0 0 1.146-1.147c-.459-1.186-.783-2.422-.96-3.677a10.975 10.975 0 0 0-3.857-9.193 1 1 0 0 0-1.414 0l-.696.696A6 6 0 0 0 8 2zm-1.5 2a4.5 4.5 0 0 1 7.695 2.805 14.023 14.023 0 0 1-1.93 3.588 16.03 16.03 0 0 1-3.588-1.931A4.5 4.5 0 0 1 6.5 4z"/>
-                        <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M8 2a6 6 0 0 0-6.57 9.192l-.696.696a1 1 0 0 0 0 1.414 10.975 10.975 0 0 0 9.192 3.857c1.256-.177 2.492-.5 3.678-.96a1 1 0 0 0 1.146-1.147c-.459-1.186-.783-2.422-.96-3.677a10.975 10.975 0 0 0-3.857-9.193 1 1 0 0 0-1.414 0l-.696.696A6 6 0 0 0 8 2zm-1.5 2a4.5 4.5 0 0 1 7.695 2.805 14.023 14.023 0 0 1-1.93 3.588 16.03 16.03 0 0 1-3.588-1.931A4.5 4.5 0 0 1 6.5 4z" />
+                        <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
                     </svg>
                 </span>
             </div><br>
@@ -193,17 +238,19 @@
                 <li class="password-condition">At least one digit</li>
                 <li class="password-condition">At least one special character</li>
             </ul>
-            
+
             <!-- Confirm Password -->
             <div class="confirm-password-container">
-            <label for="confirm-password">Confirm Password:</label>
-            <input type="password" id="confirm-password" name="confirm-password" required><br>
-            <span class="toggle-confirm-password" onclick="togglePasswordVisibility('confirm-password')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                    <path d="M8 2a6 6 0 0 0-6.57 9.192l-.696.696a1 1 0 0 0 0 1.414 10.975 10.975 0 0 0 9.192 3.857c1.256-.177 2.492-.5 3.678-.96a1 1 0 0 0 1.146-1.147c-.459-1.186-.783-2.422-.96-3.677a10.975 10.975 0 0 0-3.857-9.193 1 1 0 0 0-1.414 0l-.696.696A6 6 0 0 0 8 2zm-1.5 2a4.5 4.5 0 0 1 7.695 2.805 14.023 14.023 0 0 1-1.93 3.588 16.03 16.03 0 0 1-3.588-1.931A4.5 4.5 0 0 1 6.5 4z"/>
-                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-                </svg>
-            </span>
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" required><br>
+                <span class="toggle-confirm-password" onclick="togglePasswordVisibility('confirm-password')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M8 2a6 6 0 0 0-6.57 9.192l-.696.696a1 1 0 0 0 0 1.414 10.975 10.975 0 0 0 9.192 3.857c1.256-.177 2.492-.5 3.678-.96a1 1 0 0 0 1.146-1.147c-.459-1.186-.783-2.422-.96-3.677a10.975 10.975 0 0 0-3.857-9.193 1 1 0 0 0-1.414 0l-.696.696A6 6 0 0 0 8 2zm-1.5 2a4.5 4.5 0 0 1 7.695 2.805 14.023 14.023 0 0 1-1.93 3.588 16.03 16.03 0 0 1-3.588-1.931A4.5 4.5 0 0 1 6.5 4z" />
+                        <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+                    </svg>
+                </span>
             </div><br>
             <div id="password-match-message" style="color: red;"></div>
 
@@ -217,8 +264,8 @@
         <button class="cancel" onclick="hideConfirmationDialog()">Cancel</button>
     </div>
 
- <!-- Display Message Container -->
- <div class="message-container" id="messageContainer"></div>
+    <!-- Display Message Container -->
+    <!-- <div class="message-container" id="messageContainer"></div> -->
 
     <script>
         const newPasswordInput = document.getElementById("new-password");
@@ -226,27 +273,28 @@
         const passwordStrengthList = document.querySelectorAll(".password-condition");
         const submitButton = document.getElementById("submit-button");
         const passwordMatchMessage = document.getElementById("password-match-message");
+        const sendOtpButton = document.getElementById("send-otp-button");
         var passwordMatched = false;
         var passwordValidated = false;
-    
+
         newPasswordInput.addEventListener("input", validatePassword);
         confirmPasswordInput.addEventListener("input", passwordMatch);
         // let debounceTimeout;
 
-// newPasswordInput.addEventListener("input", () => {
-//   clearTimeout(debounceTimeout);
-//   debounceTimeout = setTimeout(validatePassword, 500); // Adjust the delay as needed (e.g., 500 milliseconds)
-// });
+        // newPasswordInput.addEventListener("input", () => {
+        //   clearTimeout(debounceTimeout);
+        //   debounceTimeout = setTimeout(validatePassword, 500); // Adjust the delay as needed (e.g., 500 milliseconds)
+        // });
 
-// confirmPasswordInput.addEventListener("input", () => {
-//   clearTimeout(debounceTimeout);
-//   debounceTimeout = setTimeout(passwordMatch, 500); // Adjust the delay as needed (e.g., 500 milliseconds)
-// });
-    
+        // confirmPasswordInput.addEventListener("input", () => {
+        //   clearTimeout(debounceTimeout);
+        //   debounceTimeout = setTimeout(passwordMatch, 500); // Adjust the delay as needed (e.g., 500 milliseconds)
+        // });
+
         function validatePassword() {
+            passwordMatchMessage.style.display = "block";
             const newPassword = newPasswordInput.value;
             const confirmPassword = confirmPasswordInput.value;
-    
             // Check password strength
             const conditions = [
                 newPassword.length >= 8,
@@ -255,7 +303,7 @@
                 /\d/.test(newPassword),
                 /[@$!%*?&]/.test(newPassword),
             ];
-    
+
             conditions.forEach((condition, index) => {
                 if (condition) {
                     passwordStrengthList[index].style.color = "green";
@@ -265,12 +313,19 @@
             });
             if (conditions.every(condition => condition)) {
                 passwordValidated = true
+                passwordMatchMessage.textContent = "";
+                passwordMatchMessage.style.color = "red";
+                return true
             } else {
                 passwordValidated = false;
+                passwordMatchMessage.textContent = "Please enter valid password";
+                passwordMatchMessage.style.color = "red";
+                return false
             }
         }
-    
+
         function passwordMatch() {
+            passwordMatchMessage.style.display = "block";
             const newPassword = newPasswordInput.value;
             const confirmPassword = confirmPasswordInput.value;
             if (newPassword === confirmPassword) {
@@ -278,19 +333,19 @@
                 confirmPasswordInput.style.borderColor = "green";
                 passwordMatchMessage.textContent = "Passwords matched";
                 passwordMatchMessage.style.color = "green";
+                passwordMatched = true
+                return true
             } else {
                 // confirmPasswordInput.setCustomValidity("Passwords do not match");
                 confirmPasswordInput.style.borderColor = "red";
                 passwordMatchMessage.textContent = "Passwords don't match";
                 passwordMatchMessage.style.color = "red";
-            }
-            if (newPassword === confirmPassword) {
-                passwordMatched = true
-            } else {
                 passwordMatched = false;
+                return false
             }
+
         }
-    
+
         // Function to toggle password visibility
         function togglePasswordVisibility(inputId) {
             const togglePasswordInput = document.getElementById(inputId);
@@ -300,8 +355,8 @@
                 togglePasswordInput.type = "password";
             }
         }
-                        // Function to show the confirmation dialog
-                        function showConfirmationDialog() {
+        // Function to show the confirmation dialog
+        function showConfirmationDialog() {
             const confirmationDialog = document.getElementById("confirmationDialog");
             confirmationDialog.style.display = "block";
         }
@@ -312,24 +367,25 @@
             confirmationDialog.style.display = "none";
         }
 
-                // Function to display a message
-                function displayMessage(message, isSuccess) {
-            const messageContainer = document.getElementById("messageContainer");
-            messageContainer.innerHTML = message;
+        // Function to display a message
+        function displayMessage(message, isSuccess) {
+            // const messageContainer = document.getElementById("messageContainer");
+            passwordMatchMessage.innerHTML = message;
 
             if (isSuccess) {
-                messageContainer.style.backgroundColor = "#4CAF50"; // Green color for success
+                passwordMatchMessage.style.color = "#4CAF50"; // Green color for success
             } else {
-                messageContainer.style.backgroundColor = "#f44336"; // Red color for error
+                passwordMatchMessage.style.color = "#f44336"; // Red color for error
             }
 
-            messageContainer.style.display = "block";
+            passwordMatchMessage.style.display = "block";
 
             // Automatically hide the message after 3 seconds
             setTimeout(function () {
-                messageContainer.style.display = "none";
+                passwordMatchMessage.style.display = "none";
             }, 3000);
         }
+
 
 
         // Function to submit the form via AJAX
@@ -339,10 +395,10 @@
             const password = document.getElementById("new-password").value;
 
             const xhr = new XMLHttpRequest();
-            xhr.open("PATCH", "https://shop-api-server-service-thevineet.cloud.okteto.net/user/delete", true);
+            xhr.open("PATCH", "https://shop-api-server-service-thevineet.cloud.okteto.net/updatePassword", true);
             xhr.setRequestHeader("Content-Type", "application/json");
 
-            xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
                         // Handle a successful response (e.g., Password Updation succeeded)
@@ -360,19 +416,99 @@
                 }
             };
 
-            const requestBody = JSON.stringify({ mobile, password , otp});
+            const requestBody = JSON.stringify({ mobile, password, otp });
             xhr.send(requestBody);
 
             hideConfirmationDialog();
-           
+
         }
-        
+        function validateMobile() {
+            const mobileInput = document.getElementById("mobile");
+            const mobileError = document.getElementById("mobile-error");
+            mobileError.style.display = "block";
+            if (mobileInput.value.trim() === "") {
+                mobileError.textContent = "Please enter valid mobile number.";
+                mobileError.style.color = "red";
+                return false;
+            } else if (mobileInput.value.length < 10) {
+                mobileError.textContent = "Mobile number must be at least 10 digits.";
+                mobileError.style.color = "red";
+                return false;
+            } else {
+                // Implement your logic to send OTP here
+                mobileError.textContent = ""; // Clear any previous error message
+                return true;
+            }
+        }
+
+        function displayMessageOTP(message, isSuccess) {
+            const messageContainer = document.getElementById("mobile-error");
+            messageContainer.innerHTML = message;
+
+            if (isSuccess) {
+                messageContainer.style.color = "#4CAF50"; // Green color for success
+            } else {
+                messageContainer.style.color = "#f44336"; // Red color for error
+            }
+
+            messageContainer.style.display = "block";
+
+            // Automatically hide the message after 3 seconds
+            setTimeout(function () {
+                messageContainer.style.display = "none";
+            }, 3000);
+        }
+
+        function sendOTP() {
+            if (validateMobile()) {
+                const mobile = document.getElementById("mobile").value;
+
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "https://shop-api-server-service-thevineet.cloud.okteto.net/user/sendOtpMail", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            // Handle a successful response (e.g., Password Updation succeeded)
+                            console.log("Otp sent successfully.");
+                            displayMessageOTP("Otp sent successfully. Sometimes it might take upto 60 seconds for you to recieve otp", true);
+                        }
+                        else if (xhr.status === 404) {
+                            displayMessageOTP("Could not send Otp", false);
+                        }
+                        else {
+                            // Handle an error response (e.g., Password Updation failed)
+                            console.error("Could not send Otp.");
+                            displayMessageOTP("Could not send Otp", false);
+                        }
+                    }
+                };
+
+                const requestBody = JSON.stringify({ mobile});
+                xhr.send(requestBody);
+            }
+
+        }
+
+
         // Handle the form submission to show the confirmation dialog
         document.getElementById("forgot-password-form").addEventListener("submit", function (e) {
             e.preventDefault(); // Prevent the default form submission
-            showConfirmationDialog(); // Show the confirmation dialog
-            console.log("Form submitted");
+            if (validatePassword() && passwordMatch()) {
+                showConfirmationDialog(); // Show the confirmation dialog if the password is valid
+            }
         });
+
+        // sendOtpButton.addEventListener("click", function () {
+        //     // Implement OTP sending logic here
+        //     // You can use AJAX to send OTP to the user's mobile number
+        //     // For example:
+        //     // - Generate an OTP
+        //     // - Send the OTP to the server via an API
+        //     // - Handle the server's response
+        //     // - Display a success or error message to the user
+        // });
 
         // Close the confirmation dialog when clicking outside of it
         window.addEventListener("click", function (e) {
@@ -387,7 +523,8 @@
                 hideConfirmationDialog();
             }
         });
-        
+
     </script>
 </body>
+
 </html>
