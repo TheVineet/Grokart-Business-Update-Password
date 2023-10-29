@@ -260,7 +260,7 @@
     </div>
     <div class="confirmation-dialog" id="confirmationDialog">
         <p>Do you want to update password?</p>
-        <button onclick="confirmUpdate()">Delete</button>
+        <button onclick="confirmUpdate()">Update</button>
         <button class="cancel" onclick="hideConfirmationDialog()">Cancel</button>
     </div>
 
@@ -417,6 +417,7 @@
             };
 
             const requestBody = JSON.stringify({ mobile, password, otp });
+            console.log(requestBody)
             xhr.send(requestBody);
 
             hideConfirmationDialog();
