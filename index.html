@@ -395,7 +395,7 @@
             const password = document.getElementById("new-password").value;
 
             const xhr = new XMLHttpRequest();
-            xhr.open("PATCH", "http://localhost:8000/user/updatePassword", true);
+            xhr.open("PATCH", "https://shop-api-server-service-thevineet.cloud.okteto.net/user/updatePassword", true);
             xhr.setRequestHeader("Content-Type", "application/json");
 
             xhr.onreadystatechange = function () {
